@@ -24,6 +24,11 @@ for e in edges_dline:
 print 'nodes: ', G.number_of_nodes()
 print 'edges: ', G.number_of_edges()
 
+# Graph setup
+pos = nx.spring_layout(G, scale=2)
+edge_labels = nx.get_edge_attributes(G,'weight')
+
 # SHOW GRAPH
-nx.draw_networkx(G)
+nx.draw_networkx(G, pos)
+nx.draw_networkx_edge_labels(G, pos, edge_labels = edge_labels)
 plt.show()
