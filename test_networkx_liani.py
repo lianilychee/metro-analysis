@@ -20,6 +20,12 @@ for e in edges_dline:
     G.edge[n1][n2]['weight'] = weights_dline[i]
     i += 1
 
+# Dijkstra's
+print(nx.dijkstra_path(G,'riverside','newton highlands'))
+
+# A-star
+print(nx.astar_path(G,'riverside','newton highlands'))
+
 # VERIFY
 print 'nodes: ', G.number_of_nodes()
 print 'edges: ', G.number_of_edges()
