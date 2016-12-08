@@ -4,37 +4,32 @@ import matplotlib.pyplot as plt
 G = nx.Graph()
 
 
-
 # ADD NODES & EDGES
-nodes_dline = ['riverside', 'waban', 'eliot', 'newton highlands']
-edges_dline = [('riverside','waban'),('waban','eliot'),('eliot','newton highlands')]
-weights_dline = [2.225, 4.040, 0.431]
-
-G.add_nodes_from(nodes_dline)
-G.add_edges_from(edges_dline)
+nodes = ['A', 'B', 'C', 'D']
+G.add_nodes_from(nodes)
 
 # add weights to edges
-i = 0
-for e in edges_dline:
-    n1, n2 = e[0], e[1]
-    G.edge[n1][n2]['weight'] = weights_dline[i]
-    i += 1
+G.add_edge('A', 'B', {'weight':4})
+G.add_edge('B', 'D', {'weight':6})
 
-# Dijkstra's
-print(nx.dijkstra_path(G,'riverside','newton highlands'))
+G.add_edge('B', 'C', {'weight':1})
 
-# A-star
-print(nx.astar_path(G,'riverside','newton highlands'))
+G.add_edge('A', 'C', {'weight':2})
+G.add_edge('C', 'D', {'weight':8})
 
 # VERIFY
+print 'VERIFICATION'
 print 'nodes: ', G.number_of_nodes()
-print 'edges: ', G.number_of_edges()
+print 'edges: ', G.number_of_edges(), '\n'
 
-# Graph setup
-pos = nx.spring_layout(G, scale=2)
-edge_labels = nx.get_edge_attributes(G,'weight')
+# TEST ALGS
+print 'DIJKSTRA: ', (nx.dijkstra_path(G,'A','D'))
+print 'A*:       ', (nx.astar_path(G,'A','D'))
+print 'Bellman:  ', (nx.bellman_ford(G, 'A'))
 
-# SHOW GRAPH
-nx.draw_networkx(G, pos)
-nx.draw_networkx_edge_labels(G, pos, edge_labels = edge_labels)
-plt.show()
+# # DRAW GRAPH
+# pos = nx.spring_layout(G, scale=2)
+# edge_labels = nx.get_edge_attributes(G,'weight')
+# nx.draw_networkx(G, pos)
+# nx.draw_networkx_edge_labels(G, pos, edge_labels = edge_labels)
+# plt.show()
