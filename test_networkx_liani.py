@@ -1,5 +1,20 @@
 import networkx as nx
 import matplotlib.pyplot as plt
+import cProfile, pstats, StringIO
+
+
+def start_profiler():
+    profiler = cProfile.Profile()
+    profiler.enable()
+    return profiler
+
+def end_profiler(profiler):
+    profiler.disable()
+    s = StringIO.StringIO()
+    sortby = 'cumulative'
+    ps = pstats.Stats(profiler, stream=s).sort_stats(sortby)
+    ps.print_stats()
+    print s.getvalue()
 
 G = nx.Graph()
 
@@ -22,10 +37,15 @@ print 'VERIFICATION'
 print 'nodes: ', G.number_of_nodes()
 print 'edges: ', G.number_of_edges(), '\n'
 
+profiler = start_profiler()
+
 # TEST ALGS
 print 'DIJKSTRA: ', (nx.dijkstra_path(G,'A','D'))
 print 'A*:       ', (nx.astar_path(G,'A','D'))
 print 'Bellman:  ', (nx.bellman_ford(G, 'A'))
+
+end_profiler(profiler)
+
 
 # # DRAW GRAPH
 # pos = nx.spring_layout(G, scale=2)
