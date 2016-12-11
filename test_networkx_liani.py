@@ -20,17 +20,17 @@ G = nx.Graph()
 
 
 # ADD NODES & EDGES
-nodes = ['A', 'B', 'C', 'D']
+nodes = ['a','b','c','d','e']
 G.add_nodes_from(nodes)
 
-# add weights to edges
-G.add_edge('A', 'B', {'weight':4})
-G.add_edge('B', 'D', {'weight':6})
-
-G.add_edge('B', 'C', {'weight':1})
-
-G.add_edge('A', 'C', {'weight':2})
-G.add_edge('C', 'D', {'weight':8})
+edges = {('a','b') : 15,
+        ('a','c'):12,
+        ('a','d'):4,
+        ('c','b'):3,
+        ('d','c'):7,
+        ('d','e'):6,
+        ('e','c'):1}
+G.add_edges_from(edges)
 
 # VERIFY
 print 'VERIFICATION'
@@ -40,9 +40,9 @@ print 'edges: ', G.number_of_edges(), '\n'
 profiler = start_profiler()
 
 # TEST ALGS
-print 'DIJKSTRA: ', (nx.dijkstra_path(G,'A','D'))
-print 'A*:       ', (nx.astar_path(G,'A','D'))
-print 'Bellman:  ', (nx.bellman_ford(G, 'A'))
+print 'DIJKSTRA: ', (nx.dijkstra_path(G,'a','d'))
+print 'A*:       ', (nx.astar_path(G,'a','d'))
+print 'Bellman:  ', (nx.bellman_ford(G, 'a'))
 
 end_profiler(profiler)
 
