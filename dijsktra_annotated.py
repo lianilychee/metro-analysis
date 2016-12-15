@@ -74,17 +74,25 @@ def _dijkstra_multisource(G, sources, weight, pred=None, paths=None,
             break
 
         ## loops through dictionaries of each node and their connected nodes
-        ## 'u' is each 
+        ## 'u' is the node that the original node ('v') is connected to
+        ## 'e' is the dictionary of that node (as described in 'G_succ')
+        ## If a node is connected to more than one other node, it will have one iteration for each node.
         ## See Example 2
         for u, e in G_succ[v].items():
-            ## set the cost 
+            ## weight is a "function with (u, v, data) input that returns that edges weight"
+            ## sets the cost to the weight between the vertex and its connected node
             cost = weight(v, u, e)
+            ## if there is no cost, skip the rest of this
             if cost is None:
                 continue
+            ## set the distance between v and u to the distance of start -> v plus the cost from v -> u
             vu_dist = dist[v] + cost
+            ## Cutoff is "depth to stop the search. Only return paths with length <= cutoff."
+            ## If there is a specified cutoff, and the distance from v -> u is larger than the cutoff, skip the rest of this
             if cutoff is not None:
                 if vu_dist > cutoff:
                     continue
+            ## START HERE
             if u in dist:
                 if vu_dist < dist[u]:
                     raise ValueError('Contradictory paths found:',
