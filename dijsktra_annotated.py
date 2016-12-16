@@ -92,22 +92,38 @@ def _dijkstra_multisource(G, sources, weight, pred=None, paths=None,
             if cutoff is not None:
                 if vu_dist > cutoff:
                     continue
-            ## START HERE
+            ## Loop through each connected node 'u' in the final distance area 'dist'
             if u in dist:
+                ## If the distance from 'v' to 'u' is less than the distance to 'u', there is a contradictory path.
+                ## There may be negative weights.
                 if vu_dist < dist[u]:
                     raise ValueError('Contradictory paths found:',
                                      'negative weights?')
+
+            ## If the connected node 'u' has not been visited or the distance is less than the distance in seen, continue.
             elif u not in seen or vu_dist < seen[u]:
+                ## Set the value of seen for 'u' to the distance from 'v' to 'u'
                 seen[u] = vu_dist
+                ## Add a three-tuple to the array fringe that sets the distance to the distance between 'v' and 'u', the next value from the list 'c', and the connected node 'u'
                 push(fringe, (vu_dist, next(c), u))
+
+                ## 'paths' is an optional dictionary to store the distance from the source to each node where the node is the key
+                ## If 'None' is passed in where 'paths' should be, it means do not store the paths.
+                ## If 'paths' is not 'None,' then store the path to 'u' to be the path to 'v' plus the distance of 'u'
                 if paths is not None:
                     paths[u] = paths[v] + [u]
+
+                ## 'pred' is an optional dictionary to store a list of predecessor nodes where the key is the node.
+                ## If 'None' is passed in where 'pred' should be, it means do not store the predecessor nodes.
+                ## If 'pred' is not 'None,' then store the previous nodes of u to be 'v'
                 if pred is not None:
                     pred[u] = [v]
+            ## If the distance from 'v' to 'u' is equal to the distance from 'u,' 
             elif vu_dist == seen[u]:
+                ## And you want to record the predecessor nodes,
                 if pred is not None:
+                    ## Add 'v' to the predecessor list of 'u'
                     pred[u].append(v)
 
-    # NX: The optional predecessor and path dictionaries can be accessed
-    # NX: by the caller via the pred and paths objects passed as arguments.
+    # NX: The optional predecessor and path dictionaries can be accessed by the caller via the pred and paths objects passed as arguments.
     return dist
