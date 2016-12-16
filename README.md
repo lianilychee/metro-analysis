@@ -4,6 +4,10 @@ Fall 2016 Discrete final project.  Analysis of shortest-path algorithms on citie
 
 * **annotating_help.ipynb:** Jupyter notebook with examples that demonstrate confusing pieces of the NetworkX code
 
+* **astar_annotated.py:** The main annotated code for Astar. Python file with comments. 
+
+* **bellmanford_annotated.py:** The main annotated code for Bellman-Ford. Python file with comments. 
+
 * **dijkstras_annotated.py:** The main annotated code for Dijkstra's. Python file with comments. Double comments (##) are things that we have written and single comments with NX (# NX: ) are comments that came with the NetworkX package. When it refers to examples, it is talking about examples in **annotating_help.ipynb**. 
 
 * **networkx_astar.py:** Code taken directly from NetworkX. Simplified from **networkx_weighted.py** to include only A*.
